@@ -1,6 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Assets.meta
 guid: e9f76dd85b7958945973f464a65cc37d
 folderAsset: yes
+========
+guid: 5979dd0b8c3f5ce4ab8afb7ebc70934d
+>>>>>>>> 33ec1db54ad479c8f97c3200f24b6aff2be75b92:Assets/Game.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
