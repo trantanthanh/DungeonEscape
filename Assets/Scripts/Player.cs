@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,6 +34,15 @@ public class Player : MonoBehaviour
             playerAnimation.Jump(false);
             Movement();
             CheckJump();
+            CheckAttack();
+        }
+    }
+
+    private void CheckAttack()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            playerAnimation.Attack();
         }
     }
 

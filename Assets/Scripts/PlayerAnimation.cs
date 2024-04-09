@@ -38,4 +38,9 @@ public class PlayerAnimation : MonoBehaviour
     {
         myAnimator.SetBool("isJumping", isJump);
     }
+
+    public void Attack()
+    {
+        myAnimator.SetTrigger("Attack");
+    }
 }
