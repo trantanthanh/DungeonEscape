@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     private float timeNextJump = 0f;
     private Rigidbody2D myRigidbody;
     private BoxCollider2D boxCollider2D;
+    private Animator myAnimator;
 
     [SerializeField] private LayerMask groundLayer;
 
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
+        myAnimator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -25,6 +27,16 @@ public class Player : MonoBehaviour
     {
         Movement();
         CheckJump();
+        CheckFlipSprite();
+    }
+
+    void CheckFlipSprite()
+    {
+        bool playerHasHorizontalSpeed = Mathf.Abs(myRigidbody.velocity.x) > Mathf.Epsilon;
+        if (playerHasHorizontalSpeed)
+        {
+            transform.localScale = new Vector2(Mathf.Sign(myRigidbody.velocity.x), 1.0f);
+        }
     }
 
     private void CheckJump()
@@ -38,9 +50,9 @@ public class Player : MonoBehaviour
 
     bool IsGrounded()
     {
-        float heightOfPlayer = boxCollider2D.size.y / 2 + 0.1f;
+        float heightOfPlayer = boxCollider2D.size.y * 2/3 + 0.1f;
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, Vector2.down, heightOfPlayer, groundLayer);
-        //Debug.DrawRay(transform.position, Vector2.down * heightOfPlayer, Color.green);
+        Debug.DrawRay(transform.position, Vector2.down * heightOfPlayer, Color.green);
 
         if (hitInfo.collider != null)
         {
