@@ -5,13 +5,17 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour
 {
     private Rigidbody2D myRigidbody;
-    private Animator myAnimator;
+    private Animator[] myAnimator;
+    private Animator playerAnim;
+    private Animator effectAnim;
 
     // Start is called before the first frame update
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
-        myAnimator = GetComponentInChildren<Animator>();
+        myAnimator = GetComponentsInChildren<Animator>();
+        playerAnim = myAnimator[0];
+        effectAnim = myAnimator[1];
     }
 
     // Update is called once per frame
@@ -31,16 +35,17 @@ public class PlayerAnimation : MonoBehaviour
 
     public void Moving(float move)
     {
-        myAnimator.SetFloat("Moving", move);
+        playerAnim.SetFloat("Moving", move);
     }
 
     public void Jump(bool isJump)
     {
-        myAnimator.SetBool("isJumping", isJump);
+        playerAnim.SetBool("isJumping", isJump);
     }
 
     public void Attack()
     {
-        myAnimator.SetTrigger("Attack");
+        playerAnim.SetTrigger("Attack");
+        effectAnim.SetTrigger("Attack");
     }
 }
