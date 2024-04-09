@@ -7,11 +7,12 @@ public class Player : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 3f;
     [SerializeField] float jumpForce = 5.0f;
-    [SerializeField] float timeBetweenJump = 0.1f;
+    [SerializeField] float timeBetweenJump = 0.2f;
     private float timeNextJump = 0f;
     private Rigidbody2D myRigidbody;
     private BoxCollider2D boxCollider2D;
     private bool isGrounded = false;
+    private bool needResetJump = false;
 
     [SerializeField] private LayerMask groundLayer;
 
@@ -29,12 +30,16 @@ public class Player : MonoBehaviour
     void Update()
     {
         isGrounded = IsGrounded();
+
         if (isGrounded)
         {
             playerAnimation.Jump(false);
-            Movement();
             CheckJump();
             CheckAttack();
+        }
+        if (!needResetJump)
+        {
+            Movement();
         }
     }
 
@@ -50,13 +55,16 @@ public class Player : MonoBehaviour
     {
         if (Time.time > timeNextJump)
         {
+            needResetJump = false;
             playerAnimation.Jump(false);
         }
-        else {
+        else
+        {
             return;
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            needResetJump = true;
             playerAnimation.Jump(true);
             timeNextJump = Time.time + timeBetweenJump;
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce);
@@ -65,7 +73,7 @@ public class Player : MonoBehaviour
 
     bool IsGrounded()
     {
-        float heightOfPlayer = boxCollider2D.size.y * 2 / 3 + 0.1f;
+        float heightOfPlayer = boxCollider2D.size.y + 0.1f;
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, Vector2.down, heightOfPlayer, groundLayer);
         //Debug.DrawRay(transform.position, Vector2.down * heightOfPlayer, Color.green);
 
