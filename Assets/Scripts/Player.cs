@@ -38,7 +38,14 @@ public class Player : MonoBehaviour
 
     private void CheckJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > timeNextJump)
+        if (Time.time > timeNextJump)
+        {
+            playerAnimation.Jump(false);
+        }
+        else {
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             playerAnimation.Jump(true);
             timeNextJump = Time.time + timeBetweenJump;
