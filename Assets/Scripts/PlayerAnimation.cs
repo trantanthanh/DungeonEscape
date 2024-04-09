@@ -7,7 +7,7 @@ public class PlayerAnimation : MonoBehaviour
     private Rigidbody2D myRigidbody;
     private Animator[] myAnimator;
     private Animator playerAnim;
-    private Animator effectAnim;
+    private Animator swordEffectAnim;
 
     // Start is called before the first frame update
     void Start()
@@ -15,7 +15,7 @@ public class PlayerAnimation : MonoBehaviour
         myRigidbody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponentsInChildren<Animator>();
         playerAnim = myAnimator[0];
-        effectAnim = myAnimator[1];
+        swordEffectAnim = myAnimator[1];
     }
 
     // Update is called once per frame
@@ -46,6 +46,6 @@ public class PlayerAnimation : MonoBehaviour
     public void Attack()
     {
         playerAnim.SetTrigger("Attack");
-        effectAnim.SetTrigger("Attack");
+        swordEffectAnim.SetTrigger("Attack");
     }
 }
