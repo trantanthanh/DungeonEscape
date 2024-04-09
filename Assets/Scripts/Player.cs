@@ -8,26 +8,35 @@ public class Player : MonoBehaviour
     [SerializeField] float jumpForce = 5.0f;
     private bool grounded = false;
     private Rigidbody2D myRigidbody;
-    public Vector2 velocityDebug;
+    private BoxCollider2D boxCollider2D;
+
+    [SerializeField] private LayerMask groundLayer;
+
     // Start is called before the first frame update
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
         Movement();
-
-        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, Vector2.down);
+        float heightOfPlayer = boxCollider2D.size.y / 2 + 0.1f;
+        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, Vector2.down, heightOfPlayer, groundLayer);
+        Debug.DrawRay(transform.position, Vector2.down * heightOfPlayer, Color.green);
 
         if (hitInfo.collider != null)
         {
+            //Debug.Log($"hit : {hitInfo.collider.name}");
             grounded = true;
         }
+        else {
+            grounded = false;
+        }
 
-        if (Input.GetKeyDown(KeyCode.Space) && grounded)
+        if (grounded && Input.GetKeyDown(KeyCode.Space))
         {
             myRigidbody.velocity += new Vector2(0, jumpForce);
         }
