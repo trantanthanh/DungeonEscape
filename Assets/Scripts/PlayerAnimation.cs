@@ -5,12 +5,13 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour
 {
     private Rigidbody2D myRigidbody;
-    [SerializeField] Animator myAnimator;
+    private Animator myAnimator;
 
     // Start is called before the first frame update
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
+        myAnimator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -31,5 +32,10 @@ public class PlayerAnimation : MonoBehaviour
     public void Moving(float move)
     {
         myAnimator.SetFloat("Moving", move);
+    }
+
+    public void Jump(bool isJump)
+    {
+        myAnimator.SetBool("isJumping", isJump);
     }
 }
